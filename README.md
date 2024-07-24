@@ -1,6 +1,5 @@
 <h1>Password Generator</h1>
 <br>
-<br>
 
 <h3>.Net Core 8 ve Blazor kullanarak geliştirdiğim rastgele şifre oluşturucu aracı.</h3>
 <br>

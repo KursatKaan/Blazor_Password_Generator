@@ -1,0 +1,897 @@
+﻿.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.blazor-error-boundary {
+    background: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTYiIGhlaWdodD0iNDkiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIG92ZXJmbG93PSJoaWRkZW4iPjxkZWZzPjxjbGlwUGF0aCBpZD0iY2xpcDAiPjxyZWN0IHg9IjIzNSIgeT0iNTEiIHdpZHRoPSI1NiIgaGVpZ2h0PSI0OSIvPjwvY2xpcFBhdGg+PC9kZWZzPjxnIGNsaXAtcGF0aD0idXJsKCNjbGlwMCkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC0yMzUgLTUxKSI+PHBhdGggZD0iTTI2My41MDYgNTFDMjY0LjcxNyA1MSAyNjUuODEzIDUxLjQ4MzcgMjY2LjYwNiA1Mi4yNjU4TDI2Ny4wNTIgNTIuNzk4NyAyNjcuNTM5IDUzLjYyODMgMjkwLjE4NSA5Mi4xODMxIDI5MC41NDUgOTIuNzk1IDI5MC42NTYgOTIuOTk2QzI5MC44NzcgOTMuNTEzIDI5MSA5NC4wODE1IDI5MSA5NC42NzgyIDI5MSA5Ny4wNjUxIDI4OS4wMzggOTkgMjg2LjYxNyA5OUwyNDAuMzgzIDk5QzIzNy45NjMgOTkgMjM2IDk3LjA2NTEgMjM2IDk0LjY3ODIgMjM2IDk0LjM3OTkgMjM2LjAzMSA5NC4wODg2IDIzNi4wODkgOTMuODA3MkwyMzYuMzM4IDkzLjAxNjIgMjM2Ljg1OCA5Mi4xMzE0IDI1OS40NzMgNTMuNjI5NCAyNTkuOTYxIDUyLjc5ODUgMjYwLjQwNyA1Mi4yNjU4QzI2MS4yIDUxLjQ4MzcgMjYyLjI5NiA1MSAyNjMuNTA2IDUxWk0yNjMuNTg2IDY2LjAxODNDMjYwLjczNyA2Ni4wMTgzIDI1OS4zMTMgNjcuMTI0NSAyNTkuMzEzIDY5LjMzNyAyNTkuMzEzIDY5LjYxMDIgMjU5LjMzMiA2OS44NjA4IDI1OS4zNzEgNzAuMDg4N0wyNjEuNzk1IDg0LjAxNjEgMjY1LjM4IDg0LjAxNjEgMjY3LjgyMSA2OS43NDc1QzI2Ny44NiA2OS43MzA5IDI2Ny44NzkgNjkuNTg3NyAyNjcuODc5IDY5LjMxNzkgMjY3Ljg3OSA2Ny4xMTgyIDI2Ni40NDggNjYuMDE4MyAyNjMuNTg2IDY2LjAxODNaTTI2My41NzYgODYuMDU0N0MyNjEuMDQ5IDg2LjA1NDcgMjU5Ljc4NiA4Ny4zMDA1IDI1OS43ODYgODkuNzkyMSAyNTkuNzg2IDkyLjI4MzcgMjYxLjA0OSA5My41Mjk1IDI2My41NzYgOTMuNTI5NSAyNjYuMTE2IDkzLjUyOTUgMjY3LjM4NyA5Mi4yODM3IDI2Ny4zODcgODkuNzkyMSAyNjcuMzg3IDg3LjMwMDUgMjY2LjExNiA4Ni4wNTQ3IDI2My41NzYgODYuMDU0N1oiIGZpbGw9IiNGRkU1MDAiIGZpbGwtcnVsZT0iZXZlbm9kZCIvPjwvZz48L3N2Zz4=) no-repeat 1rem/1.8rem, #b32121;
+    padding: 1rem 1rem 1rem 3.7rem;
+    color: white;
+}
+
+    .blazor-error-boundary::after {
+        content: "An error has occurred."
+    }
+
+.loading-progress {
+    position: relative;
+    display: block;
+    width: 8rem;
+    height: 8rem;
+    margin: 20vh auto 1rem auto;
+}
+
+    .loading-progress circle {
+        fill: none;
+        stroke: #e0e0e0;
+        stroke-width: 0.6rem;
+        transform-origin: 50% 50%;
+        transform: rotate(-90deg);
+    }
+
+        .loading-progress circle:last-child {
+            stroke: #1b6ec2;
+            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
+            transition: stroke-dasharray 0.05s ease-in-out;
+        }
+
+.loading-progress-text {
+    position: absolute;
+    text-align: center;
+    font-weight: bold;
+    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
+}
+
+    .loading-progress-text:after {
+        content: var(--blazor-load-percentage-text, "Loading");
+    }
+
+code {
+    color: #c02d76;
+}
+
+/* ----------- Home Page CSS ----------- */
+
+
+element.style {
+}
+
+* {
+    box-sizing: border-box;
+}
+
+div {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+}
+
+html {
+    color: #050606;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 16px;
+    font-optical-sizing: auto;
+}
+
+::selection {
+    background: #b3d4fc;
+    text-shadow: none;
+}
+
+element.style {
+    background-color: #F0F2F5;
+}
+
+.lp-pg {
+    background-color: #f9fafb;
+    overflow: hidden;
+    padding: 0 10px 40px;
+}
+
+/*
+    INTRO
+*/
+
+element.style {
+    background-color: #F0F2F5;
+}
+
+.lp-intro {
+    position: relative;
+    max-width: 100%;
+    margin: auto;
+    padding: 60px 32px;
+    background-color: #f9fafb;
+    text-align: center;
+}
+
+section {
+    display: block;
+    unicode-bidi: isolate;
+}
+
+/*
+    PASSWORD GENERATOR
+*/
+
+element.style {
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-generated-password {
+        height: 115px;
+        margin: 0 auto 20px;
+        padding: 34px;
+    }
+}
+
+.lp-pg-generated-password {
+    background-color: #fff;
+    border: solid 1px #eaeaea;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom: 0;
+    border-color: #f0f2f5;
+    display: flex;
+    margin: 0 auto 10px;
+    max-width: 800px;
+    padding: 20px 16px;
+    position: relative;
+}
+
+#GENERATED-PASSWORD-FORM {
+    flex-grow: 1;
+}
+
+form {
+    display: block;
+    margin-top: 0em;
+    unicode-bidi: isolate;
+}
+
+
+/*
+    PASSWORD INPUT
+*/
+element.style {
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-generated-password__input {
+        border: 0;
+        color: #000;
+        display: block;
+        height: 50px;
+        left: 0;
+        max-width: 100%;
+        padding-left: 44px;
+        padding-right: 108px;
+        position: absolute;
+        text-align: left;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        font-size: 36px;
+        line-height: 44px;
+        margin-bottom: 16px;
+        letter-spacing: -0.72px;
+        pointer-events: none;
+    }
+}
+
+.lp-pg-generated-password__input {
+    border: 0;
+    box-shadow: none;
+    color: #000;
+    display: block;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    margin-left: 15px;
+    letter-spacing: -0.56px;
+    font-family: monospace;
+    height: 38px;
+    text-align: left;
+    max-width: 660px;
+    pointer-events: none;
+}
+
+input {
+    background-color: #fff;
+    border-radius: 8px;
+    height: 50px;
+}
+
+input, select, textarea {
+    background-color: #fff;
+    border: 1px solid #c8c8c8;
+    border-radius: 5px;
+    max-width: 400px;
+    padding: 8px;
+    width: 1000%;
+    font-size: 16px;
+}
+
+button, datalist, fieldset, input, legend, optgroup, option, select, textarea {
+    font-size: 16px;
+}
+
+    input[type="text" i] {
+        padding-block: 1px;
+        padding-inline: 2px;
+    }
+
+    input:not([type="file" i], [type="image" i], [type="checkbox" i], [type="radio" i]) {
+    }
+
+input {
+    font-style:;
+    font-variant-ligatures:;
+    font-variant-caps:;
+    font-variant-numeric:;
+    font-variant-east-asian:;
+    font-variant-alternates:;
+    font-variant-position:;
+    font-weight:;
+    font-stretch:;
+    font-size:;
+    font-family:;
+    font-optical-sizing:;
+    font-kerning:;
+    font-feature-settings:;
+    font-variation-settings:;
+    text-rendering: auto;
+    color: fieldtext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: start;
+    appearance: auto;
+    -webkit-rtl-ordering: logical;
+    cursor: text;
+    background-color: field;
+    margin: 0em;
+    padding: 1px 0px;
+    border-width: 2px;
+    border-style: inset;
+    border-color: light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
+    border-image: initial;
+    padding-block: 1px;
+    padding-inline: 2px;
+}
+
+
+/*
+    ICON
+*/
+
+element.style {
+}
+
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-generated-password__icon-wrapper {
+        height: 32px;
+        padding: 0;
+        position: absolute;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 76px;
+    }
+}
+
+.lp-pg-generated-password__icon-wrapper {
+    display: flex;
+    flex-shrink: 0;
+    height: 48px;
+    padding: 4px 0;
+    width: 68px;
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-generated-password__icon-wrapper::after {
+        height: 120%;
+        pointer-events: none;
+        right: 77px;
+        top: -10%;
+        width: 20px;
+    }
+}
+
+.lp-pg-generated-password__icon-wrapper::after {
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(255, 255, 255) 100%);
+    content: "";
+    display: block;
+    filter: progid:dximagetransform.microsoft.gradient(startColorstr="#00ffffff", endColorstr="#ffffff", GradientType=1);
+    height: 88%;
+    pointer-events: none;
+    position: absolute;
+    right: 92px;
+    top: 0;
+    width: 30px;
+    z-index: 1;
+}
+
+.lp-pg-generated-password__icon {
+    background-color: #fff;
+    background-position: 50%;
+    background-repeat: no-repeat;
+    border: 0;
+    display: inline-block;
+    height: 31px;
+    position: relative;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 32px;
+    cursor: pointer;
+}
+
+    .lp-pg-generated-password__icon .lp-pg-tooltip-content {
+        width: auto;
+    }
+
+.lp-pg-tooltip-content {
+    background-color: #fff;
+    border: solid 1px #d6dbdb;
+    border-radius: 5px;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, .25);
+    color: #333f48;
+    display: none;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 16px;
+    margin-bottom: 0;
+    letter-spacing: 0;
+    height: auto;
+    left: 125%;
+    line-height: 1.4;
+    margin: 0;
+    padding: 10px;
+    position: absolute;
+    text-align: left;
+    top: -8px;
+    width: 200px;
+    z-index: 10;
+}
+
+.lp-pg-generated-password__icon:hover .lp-pg-tooltip-content {
+    display: block;
+}
+
+/*
+    COPY ICON
+*/
+
+element.style {
+    display: none;
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-generated-password__icon-copy {
+        margin-right: 8px;
+    }
+}
+
+.lp-pg-generated-password__icon-copy {
+    background-image: url(https://www.lastpass.com/assets/images/cdn/img-icon-copy-@3x.png);
+    background-size: 24px;
+}
+
+
+/*
+    GENERATED ICON
+*/
+element.style {
+}
+
+.lp-pg-generated-password__icon-generate {
+    background-image: url(https://www.lastpass.com/assets/images/cdn/icon-generate-new.svg);
+}
+
+/*
+    DELETED ICON
+*/
+
+.lp-pg-generated-password__icon-delete {
+    background-image: url('https://cdn.iconfinder.com/stored_data/1806337/128/png?token=1721821988-0JWDkbawHq78QGnGs9XSY9NzfCWeZRtvU5NqoKbNlTk%3D');
+    background-size: 28px;
+}
+
+/*
+    BUTTON
+*/
+
+button {
+    cursor: pointer;
+}
+
+button {
+    background: none;
+    border: 0;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+button {
+    appearance: auto;
+    font-style:;
+    font-variant-ligatures:;
+    font-variant-caps:;
+    font-variant-numeric:;
+    font-variant-east-asian:;
+    font-variant-alternates:;
+    font-variant-position:;
+    font-weight:;
+    font-stretch:;
+    font-size:;
+    font-family:;
+    font-optical-sizing:;
+    font-kerning:;
+    font-feature-settings:;
+    font-variation-settings:;
+    text-rendering: auto;
+    color: buttontext;
+    letter-spacing: normal;
+    word-spacing: normal;
+    line-height: normal;
+    text-transform: none;
+    text-indent: 0px;
+    text-shadow: none;
+    display: inline-block;
+    text-align: center;
+    align-items: flex-start;
+    cursor: default;
+    box-sizing: border-box;
+    background-color: buttonface;
+    margin: 0em;
+    padding-block: 1px;
+    padding-inline: 6px;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonborder;
+    border-image: initial;
+}
+
+/*
+    STRENGTH WRAPPER
+*/
+element.style {
+}
+
+.lp-pg-generated-password__strength-wrapper {
+    background-color: #f5f5f5;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    bottom: -1px;
+    height: 11px;
+    left: 0;
+    overflow: hidden;
+    position: absolute;
+    transition: background-color .63s;
+    width: 100%;
+}
+
+element.style {
+    width: 105%;
+    background-color: rgb(0, 107, 77);
+}
+
+.lp-pg-generated-password__strength {
+    background-color: #368149;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    bottom: 1px;
+    height: 10px;
+    left: 0;
+    position: absolute;
+    transition: width .63s, background-color .2s;
+    width: 0;
+}
+
+
+/*
+    CUSTOMIZE FORM
+*/
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-settings {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 30px 40px;
+    }
+}
+
+.lp-pg-settings {
+    background-color: #fff;
+    border: solid 1px #eaeaea;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .15);
+    margin: 0 auto 15px;
+    max-width: 800px;
+    padding: 25px;
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-pg-settings__title {
+        flex-shrink: 0;
+        width: 100%;
+    }
+}
+
+.lp-pg-settings__title {
+    border-bottom: 2px solid #f0f2f5;
+    line-height: 2.7rem;
+    margin-bottom: 26px;
+}
+
+@media only screen and (min-width: 720px) {
+    h3 {
+        font-size: 36px;
+        line-height: 44px;
+        margin-bottom: 16px;
+        letter-spacing: -0.72px;
+    }
+}
+
+h3 {
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 28px;
+    line-height: 32px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    letter-spacing: -0.56px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Source Sans 3", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-custom-range__wrapper {
+        display: block;
+        padding-right: 40px;
+        width: 50%;
+    }
+}
+
+.lp-custom-range__wrapper {
+    margin-bottom: 40px;
+}
+
+.lp-custom-range__label {
+    color: #000;
+    flex-basis: 100%;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 8px;
+    letter-spacing: -0.16px;
+    margin-bottom: 14px;
+    display: block;
+}
+
+label {
+    cursor: default;
+}
+
+/*
+    RANGE SLIDER
+*/
+
+.lp-custom-range__inner {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.lp-custom-range__number {
+    margin-right: 20px;
+    height: 40px;
+    text-align: center;
+    width: 50px;
+    background-color: #fff;
+    border: 1px solid #c8c8c8;
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.lp-custom-range {
+    flex: 1;
+    height: 20px;
+    max-width: 100%;
+}
+
+.lp-custom-range__bar {
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    height: 10px;
+    position: relative;
+    width: 100%;
+}
+
+.lp-custom-range__value {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #d22;
+    pointer-events: none;
+}
+
+.lp-custom-range__slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: transparent;
+    outline: none;
+    opacity: 0.9;
+    transition: opacity .2s;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+    .lp-custom-range__slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: #d22;
+        cursor: pointer;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .25);
+    }
+
+    .lp-custom-range__slider::-moz-range-thumb {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        background: #d22;
+        cursor: pointer;
+        box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .25);
+    }
+
+/*
+    CHECKBOX
+*/
+
+element.style {
+}
+
+@media only screen and (min-width: 700px) {
+    .lp-custom-range__wrapper + .lp-row {
+        width: 50%;
+    }
+}
+
+.lp-pg .lp-row {
+    display: flex;
+    justify-content: center;
+}
+
+.lp-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+}
+
+.lp-checkbox-group {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+}
+
+.lp-pg-settings__checkbox-wrap {
+    display: flex;
+    justify-content: space-between;
+    max-width: 400px;
+    padding-left: 10px;
+    width: 80%;
+}
+
+.lp-checkbox {
+    margin-bottom: 20px;
+}
+
+.lp-checkbox__input:not(:checked), .lp-checkbox__input:checked {
+    left: -9999px;
+    position: absolute;
+}
+
+    .lp-checkbox__input:not(:checked) + .lp-checkbox__label::before, .lp-checkbox__input:checked + .lp-checkbox__label::before {
+        background: #fff;
+        border: 1px solid #ced8e3;
+        border-radius: 4px;
+        box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, .25);
+        content: "";
+        height: 23px;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 23px;
+    }
+
+    .lp-checkbox__input:checked + .lp-checkbox__label::before {
+        background-color: #d22;
+        border: 1px solid #d22;
+        box-shadow: inset 0 1px 2px 0 rgba(0, 0, 0, 0);
+    }
+
+    .lp-checkbox__input:not(:checked) + .lp-checkbox__label::after, .lp-checkbox__input:checked + .lp-checkbox__label::after {
+        border-bottom: 3px solid #fff;
+        border-left: 3px solid #fff;
+        content: "";
+        display: block;
+        left: 4px;
+        position: absolute;
+        top: 6px;
+        transform: rotate(-50deg);
+        transition: all .1s;
+    }
+
+    .lp-checkbox__input:checked + .lp-checkbox__label::after {
+        height: 5px;
+        left: 4px;
+        opacity: 1;
+        top: 6px;
+        width: 14px;
+    }
+
+.lp-checkbox__label {
+    color: #000;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: -0.16px;
+    line-height: 27px;
+    padding-left: 34px;
+    position: relative;
+}
+
+
+/*
+    SAVE PASSWORD
+*/
+
+element.style {
+}
+
+.lp-pg-save-password {
+    display: flex;
+    justify-content: center;
+}
+
+.lp-pg-save-password {
+    text-align: center;
+}
+
+.lp-pg-save-password__button {
+    margin: 16px;
+}
+
+.lp-button__jumbo, .lp-button--jumbo, .lp-button.jumbo {
+    min-height: 52px;
+    padding: 12px 32px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: -0.16px;
+}
+
+.lp-button__red, .lp-button--red, .lp-button.brand {
+    background: #d71340;
+    color: #fff;
+}
+
+.lp-button {
+    border: 0;
+    border-radius: 8px;
+    box-sizing: border-box;
+    cursor: pointer;
+    display: inline-block;
+    font-family: "Source Sans 3", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px;
+    letter-spacing: -0.16px;
+    padding: 8px 16px;
+    position: relative;
+    text-align: center;
+    min-height: 40px;
+}
+
+/*
+    SAVED PASSWORD
+*/
+.lp-pg-settings .list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-top: 1px solid #dcdcdc;
+}
+
+.password-container {
+    flex: 1;
+    font-size: 20px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-right: 10px;
+    
+}
+
+.button-container {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+
+/*
+    CREATED BY
+*/
+
+.created-by {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Yüksekliği isteğinize göre ayarlayın */
+    text-align: center; /* Metni ortalamak için */
+}

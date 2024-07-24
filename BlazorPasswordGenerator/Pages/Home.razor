@@ -1,0 +1,320 @@
+﻿@page "/"
+@using System.Text
+@using BlazorPasswordGenerator.Enums
+@inject NavigationManager Navigation
+@inject IToastService ToastService
+@inject IJSRuntime JSRuntime
+
+<PageTitle>Password Generator</PageTitle>
+
+<section data-component-name="Generic Callout" class="lp-intro " style="background-color:#F0F2F5; ">
+    <h2>Password Generator tool coded with Blazor at "Yazılım Academy" Bootcamp<a name="generatorTool"></a></h2><a name="generatorTool">
+    </a><div class="lp-intro__copy">
+        <a name="generatorTool">
+        </a><p class="large">
+            <a name="generatorTool"></a><a name="generatorTool"></a>
+            An automatic random password generator tool that you can customize as you wish and see the strength of the generated password.
+        </p>
+    </div>
+</section>
+
+<div data-component-name="Password Gen" class="page-password-generator">
+    <div class="lp-pg " style="background-color:#F0F2F5;">
+        <div class="lp-pg-generated-password" data-module="passwordGenerator">
+            <form id="GENERATED-PASSWORD-FORM">
+                <input id="GENERATED-PASSWORD" spellcheck="false" class="lp-pg-generated-password__input" type="text" readonly="readonly" @bind="password">
+            </form>
+            <div class="lp-pg-generated-password__icon-wrapper">
+                <button data-clipboard-target="#GENERATED-PASSWORD" class="lp-pg-generated-password__icon lp-pg-generated-password__icon-copy" @onclick="@(() => CopyPasswordToClipboard(string.Empty))">
+                    <span class="lp-pg-tooltip-content">
+                        Copy
+                    </span>
+                </button>
+                <button class="lp-pg-generated-password__icon lp-pg-generated-password__icon-generate" @onclick="HandleGeneratePasswordClick">
+                    <span class="lp-pg-tooltip-content">
+                        Generate
+                    </span>
+                </button>
+            </div>
+            <div class="lp-pg-generated-password__strength-wrapper">
+                <div class="lp-pg-generated-password__strength" style=" width: 105%; background-color: #4caf50"></div>
+            </div>
+        </div>
+
+        <form id="PG-FORM" class="lp-pg-settings">
+            <h3 class="lp-pg-settings__title">Customize your password</h3>
+            <div class="lp-custom-range__wrapper">
+                <label class="lp-custom-range__label" for="lp-pg-password-length">
+                    Password Length
+                </label>
+                <div class="lp-custom-range__inner">
+                    <input name="length" class="lp-custom-range__number" id="lp-pg-password-length" step="1" type="number" min="8" max="50" @bind="passwordLength" @oninput="HandlePasswordLengthInputOnChange">
+                    <div class="lp-custom-range" id="lp-pg-password-range">
+                        <div id="lp-pg-password-range" class="lp-custom-range__bar">
+                            <div class="lp-custom-range__value" style="width: 50px;"></div>
+                            <input type="range" class="lp-custom-range__slider" min="6" max="50"
+                                   @bind="passwordLength" @oninput="HandleRangeOnChange" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="lp-row">
+                <div class="lp-pg-settings__checkbox-wrap">
+                    <div class="lp-checkbox-group">
+                        <div class="lp-checkbox">
+                            <input class="lp-checkbox__input" id="lp-pg-uppercase" type="checkbox" name="uppercase" @bind="@includeUppercase" @oninput="@((args) => HandleCheckboxOnChange(args, CheckBoxActionType.Uppercase))">
+                            <label class="lp-checkbox__label" for="lp-pg-uppercase">
+                                Uppercase
+                            </label>
+                        </div>
+                        <div class="lp-checkbox">
+                            <input class="lp-checkbox__input" id="lp-pg-lowercase" type="checkbox" name="lowercase" @bind="@includeLowercase" @oninput="@((args) => HandleCheckboxOnChange(args, CheckBoxActionType.Lowercase))">
+                            <label class="lp-checkbox__label" for="lp-pg-lowercase">
+                                Lowercase
+                            </label>
+                        </div>
+                    </div>
+                    <div class="lp-checkbox-group">
+                        <div class="lp-checkbox">
+                            <input class="lp-checkbox__input" id="lp-pg-numbers" type="checkbox" name="numbers" @bind="@includeNumbers" @oninput="@((args) => HandleCheckboxOnChange(args, CheckBoxActionType.Numbers))">
+                            <label class="lp-checkbox__label" for="lp-pg-numbers">
+                                Numbers
+                            </label>
+                        </div>
+                        <div class="lp-checkbox">
+                            <input class="lp-checkbox__input" id="lp-pg-symbols" type="checkbox" name="symbols" @bind="@includeSpecialChars" @oninput="@((args) => HandleCheckboxOnChange(args, CheckBoxActionType.SpecialChars))">
+                            <label class="lp-checkbox__label" for="lp-pg-symbols">
+                                Symbols
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <div class="lp-pg-save-password">
+            <button data-clipboard-target="#GENERATED-PASSWORD" class="lp-pg-save-password__button lp-button lp-button__red lp-button__jumbo" @onclick="HandleSavePasswordClick">
+                Save password
+            </button>
+        </div>
+
+        <div class="lp-pg-settings">
+            <h3 class="lp-pg-settings__title">Saved your password</h3>
+            <div class="card-body animate-card">
+                @if (savedPasswords.Any())
+                {
+                    <ul class="list-group">
+                        @foreach (var savedPassword in savedPasswords)
+                        {
+                            <li class="list-group-item">
+                                <div class="password-container">
+                                    <span>@savedPassword</span>
+                                </div>
+                                <div class="button-container">
+                                    <button class="lp-pg-generated-password__icon lp-pg-generated-password__icon-copy" type="button" @onclick="@(() => CopyPasswordToClipboard(savedPassword))">
+                                        <span class="lp-pg-tooltip-content">Copy</span>
+                                    </button>
+                                    <button class="lp-pg-generated-password__icon lp-pg-generated-password__icon-delete" type="button" @onclick="@(() => HandleDeleteButtonClick(savedPassword))">
+                                        <span class="lp-pg-tooltip-content">Delete</span>
+                                    </button>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                }
+                else
+                {
+                    <h5 class="text-center text-muted">There aren't any saved passwords.</h5>
+                }
+            </div>
+        </div>
+        <span class="created-by"><p>Coded by Kürşat Kaan Onaran</p></span>
+    </div>
+</div>
+
+@code
+{
+
+    private string password = string.Empty;
+    private int passwordLength = 12;
+    private HashSet<string> savedPasswords = [];
+
+    private static Random random = new Random();
+    private static StringBuilder stringBuilder = new StringBuilder();
+
+    private bool includeLowercase = true;
+    private bool includeUppercase = true;
+    private bool includeNumbers = true;
+    private bool includeSpecialChars = true;
+
+    private const string lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
+    private const string uppercaseLetters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private const string numbers = "0123456789";
+    private const string specialCharacters = "!@#$%&*()_+-={};:?";
+
+    protected override void OnInitialized()
+    {
+        GeneratePassword();
+
+        base.OnInitialized();
+    }
+
+    private void HandleDeleteButtonClick(string passwordToDelete)
+    {
+        savedPasswords.Remove(passwordToDelete);
+
+        ToastService.ShowError("The selected password deleted.");
+    }
+
+    async Task CopyPasswordToClipboard(string? passwordToCopy)
+    {
+        if (string.IsNullOrWhiteSpace(passwordToCopy))
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", password);
+
+        else
+            await JSRuntime.InvokeVoidAsync("navigator.clipboard.writeText", passwordToCopy);
+
+
+        ToastService.ShowInfo("The password copied.");
+    }
+
+
+    private void HandlePasswordLengthInputOnChange(ChangeEventArgs args)
+    {
+        if (args.Value is null)
+            return;
+
+        passwordLength = Convert.ToInt32(args.Value);
+
+        GeneratePassword();
+
+        UpdateSliderValue();
+
+        StateHasChanged();
+
+    }
+
+    private void HandleRangeOnChange(ChangeEventArgs args)
+    {
+        if (args.Value is null)
+            return;
+
+        passwordLength = Convert.ToInt32(args.Value);
+
+        GeneratePassword();
+        UpdateSliderValue();
+
+        StateHasChanged();
+    }
+
+    //Script
+
+    private async Task UpdateSliderValue()
+    {
+        await JSRuntime.InvokeVoidAsync("updateSliderValue", "lp-pg-password-range", passwordLength);
+    }
+
+    //Script
+
+    private async Task UpdatePasswordStrength()
+    {
+        string strength = "0%";
+        string backgroundColor = "#e0e0e0"; // Varsayılan renk: gri
+
+        int selectedCheckboxes = new[] { includeUppercase, includeLowercase, includeNumbers, includeSpecialChars }
+            .Count(checkbox => checkbox);
+
+        if (password.Length >= 8 && selectedCheckboxes >= 3)
+        {
+            strength = "100%";
+            backgroundColor = "#4caf50"; // Yeşil
+        }
+        else if (password.Length >= 8 && selectedCheckboxes >= 2)
+        {
+            strength = "60%";
+            backgroundColor = "#ffeb3b"; // Sarı
+        }
+        else if (selectedCheckboxes <= 1)
+        {
+            strength = "30%";
+            backgroundColor = "#f44336"; // Kırmızı
+        }
+
+        await JSRuntime.InvokeVoidAsync("updatePasswordStrength", strength, backgroundColor);
+    }
+
+    private void HandleSavePasswordClick()
+    {
+        if (string.IsNullOrEmpty(password) || savedPasswords.Contains(password))
+        {
+            ToastService.ShowWarning("password already exists!");
+            return;
+        }
+
+
+        savedPasswords.Add(password);
+
+        ToastService.ShowSuccess("The selected password saved!");
+    }
+
+    private void HandleCheckboxOnChange(ChangeEventArgs args, CheckBoxActionType actionType)
+    {
+        if (args.Value is null)
+            return;
+
+        var result = actionType switch
+        {
+            CheckBoxActionType.SpecialChars => includeSpecialChars = (bool)args.Value,
+            CheckBoxActionType.Numbers => includeNumbers = (bool)args.Value,
+            CheckBoxActionType.Uppercase => includeUppercase = (bool)args.Value,
+            CheckBoxActionType.Lowercase => includeLowercase = (bool)args.Value,
+            _ => throw new ArgumentException("Geçersiz CheckBoxActionType", nameof(actionType))
+        };
+
+        // Checkbox değiştiğinde, şifre gücünü güncelle
+        UpdatePasswordStrength();
+
+        GeneratePassword();
+    }
+
+    private void HandleGeneratePasswordClick()
+    {
+        GeneratePassword();
+    }
+
+    private void GeneratePassword()
+    {
+        stringBuilder.Clear();
+
+        var validChars = new StringBuilder();
+
+        if (includeLowercase)
+            validChars.Append(lowercaseLetters);
+
+        if (includeUppercase)
+            validChars.Append(uppercaseLetters);
+
+        if (includeNumbers)
+            validChars.Append(numbers);
+
+        if (includeSpecialChars)
+            validChars.Append(specialCharacters);
+
+        if (!includeUppercase && !includeLowercase && !includeNumbers && !includeSpecialChars)
+        {
+            includeNumbers = true;
+            validChars.Append(numbers);
+        }
+
+
+        for (int i = 0; i < passwordLength; i++)
+        {
+            var randomIndex = random.Next(0, validChars.Length);
+
+            stringBuilder.Append(validChars[randomIndex]);
+
+        }
+
+        password = stringBuilder.ToString();
+    }
+}
